@@ -28,6 +28,26 @@
         display: block;
       }
     </style>
+    <script>
+      async function loadCommitHistory() {
+        const output = document.getElementById("commit-history");
+        if ((document.body.dataset.state = "signed-in")) {
+          const commitHistoryResponse = await fetch(
+            "https://api.github.com/repos/jhancock532/cloudflare-github-oauth/commits",
+            {
+              headers: {
+                accept: "application/vnd.github.v3+json",
+                authorization: `token ${document.body.dataset.token}`,
+              },
+            }
+          );
+
+          output.innerHTML = commitHistoryResponse;
+        } else {
+          output.innerHTML = "Not signed in :(";
+        }
+      }
+    </script>
   </head>
   <body data-state="signed-out">
     <h1>
@@ -100,24 +120,6 @@
         } catch (error) {
           alert(error);
           location.reload();
-        }
-      }
-    </script>
-
-    <script>
-      function loadCommitHistory() {
-        const output = document.getElementById("commit-history");
-        if ((document.body.dataset.state = "signed-in")) {
-
-          const getUserResponse = await fetch("https://api.github.com/repos/jhancock532/cloudflare-github-oauth/commits", {
-            headers: {
-              accept: "application/vnd.github.v3+json",
-              authorization: `token ${document.body.dataset.token}`,
-            },
-          });
-
-        } else {
-          output.innerHTML = "Not signed in :(";
         }
       }
     </script>
