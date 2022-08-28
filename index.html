@@ -10,6 +10,16 @@
         margin: 0;
         font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
       }
+
+      p {
+        font-size: 20px;
+      }
+
+      button {
+        font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+        font-size: 20px;
+      }
+
       .container {
         max-width: 800px;
         margin: 20px auto;
@@ -51,7 +61,7 @@
   <p>${commitHistory[i].commit.message}</p>
 </a>
 <p>${commitHistory[i].commit.author.name}</p>
-<small>${commitHistory[i].sha}</small>
+<small style="margin-bottom: 10px;">${commitHistory[i].sha}</small>
 <hr>
 </div>
 `;
