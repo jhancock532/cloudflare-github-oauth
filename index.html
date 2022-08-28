@@ -4,20 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>
-      Login with GitHub – A Cloudflare Worker + GitHub Pages Login Example
-    </title>
+    <title>List my commits</title>
     <style>
-      * {
+      body {
+        margin: 0;
         font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
-        text-align: center;
       }
-      h1 small {
-        display: block;
-        font-size: 1rem;
-      }
-      h2 {
-        margin-top: 10rem;
+      .container {
+        max-width: 800px;
+        margin: 20px auto;
       }
       .loading-component {
         display: none;
@@ -51,12 +46,12 @@
           let outputHTML = "";
 
           for (let i = 0; i < commitHistory.length; i++) {
-            let commitElement = `<div>
+            let commitElement = `<div style="margin-top: 30px;">
 <a href="${commitHistory[i].html_url}" target="_blank">
   <p>${commitHistory[i].commit.message}</p>
-  <p>${commitHistory[i].commit.author}</p>
-  <small>${commitHistory[i].sha}</small>
 </a>
+<p>${commitHistory[i].commit.author.name}</p>
+<small>${commitHistory[i].sha}</small>
 <hr>
 </div>
 `;
@@ -70,25 +65,25 @@
     </script>
   </head>
   <body data-state="signed-out">
-    <h1>
-      Login with GitHub
-      <small>A Cloudflare Worker + GitHub Pages Login Example</small>
-    </h1>
-    <p class="loading-component" id="signed-out">
-      <a href="https://github-oauth-login.james-hancock6775.workers.dev"
-        >Login with GitHub</a
-      >
-    </p>
-    <p class="loading-component" id="signed-in">
-      Hello there, <span id="login"></span>. (<a href=".">Logout</a>)
-    </p>
-    <p class="loading-component" id="loading">Loading...</p>
+    <div class="container">
+      <h1>A Website That Lists Its Commits</h1>
 
-    <button onclick="loadCommitHistory();">
-      Load the commit history for this website!
-    </button>
+      <p class="loading-component" id="signed-out">
+        <a href="https://github-oauth-login.james-hancock6775.workers.dev">
+          Login with GitHub
+        </a>
+      </p>
+      <p class="loading-component" id="signed-in">
+        Hello there, <span id="login"></span>. (<a href=".">Logout</a>)
+      </p>
+      <p class="loading-component" id="loading">Loading...</p>
 
-    <div id="commit-history"></div>
+      <button onclick="loadCommitHistory();">
+        Load the commit history for this website!
+      </button>
+
+      <div id="commit-history"></div>
+    </div>
 
     <script>
       const WORKER_URL =
