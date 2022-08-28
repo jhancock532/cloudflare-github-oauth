@@ -93,7 +93,7 @@
           }
         );
 
-        const latestCommit = await commitHistoryResponse.json();
+        const latestCommit = await latestCommitResponse.json();
 
         if (latestCommit.error) {
           return alert(JSON.stringify(latestCommit, null, 2));
