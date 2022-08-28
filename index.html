@@ -35,19 +35,18 @@
       <small>A Cloudflare Worker + GitHub Pages Login Example</small>
     </h1>
     <p id="signed-out">
-      <a href="https://github-oauth-login.gr2m.workers.dev"
+      <a href="https://github-oauth-login.james-hancock6775.workers.dev"
         >Login with GitHub</a
       >
     </p>
     <p id="signed-in">
       Hello there, <span id="login"></span>. (<a href=".">Logout</a>)
     </p>
-    <p id="loading">
-      Loading...
-    </p>
+    <p id="loading">Loading...</p>
 
     <script>
-      const WORKER_URL = "https://github-oauth-login.gr2m.workers.dev";
+      const WORKER_URL =
+        "https://github-oauth-login.james-hancock6775.workers.dev";
       const code = new URL(location.href).searchParams.get("code");
       const $login = document.querySelector("#login");
 
@@ -69,9 +68,9 @@
             method: "POST",
             mode: "cors",
             headers: {
-              "content-type": "application/json"
+              "content-type": "application/json",
             },
-            body: JSON.stringify({ code })
+            body: JSON.stringify({ code }),
           });
 
           const result = await response.json();
@@ -84,8 +83,8 @@
           const getUserResponse = await fetch("https://api.github.com/user", {
             headers: {
               accept: "application/vnd.github.v3+json",
-              authorization: `token ${result.token}`
-            }
+              authorization: `token ${result.token}`,
+            },
           });
           const { login } = await getUserResponse.json();
           $login.textContent = login;
