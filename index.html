@@ -44,6 +44,12 @@
     </p>
     <p id="loading">Loading...</p>
 
+    <button onclick="loadCommitHistory();">
+      Load the commit history for this website!
+    </button>
+
+    <p id="commit-history"></p>
+
     <script>
       const WORKER_URL =
         "https://github-oauth-login.james-hancock6775.workers.dev";
@@ -79,6 +85,8 @@
             return alert(JSON.stringify(result, null, 2));
           }
 
+          document.body.dataset.token = result.token;
+
           // token can now be used to send authenticated requests against https://api.github.com
           const getUserResponse = await fetch("https://api.github.com/user", {
             headers: {
@@ -92,6 +100,24 @@
         } catch (error) {
           alert(error);
           location.reload();
+        }
+      }
+    </script>
+
+    <script>
+      function loadCommitHistory() {
+        const output = document.getElementById("commit-history");
+        if ((document.body.dataset.state = "signed-in")) {
+
+          const getUserResponse = await fetch("https://api.github.com/repos/jhancock532/cloudflare-github-oauth/commits", {
+            headers: {
+              accept: "application/vnd.github.v3+json",
+              authorization: `token ${document.body.dataset.token}`,
+            },
+          });
+
+        } else {
+          output.innerHTML = "Not signed in :(";
         }
       }
     </script>
