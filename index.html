@@ -53,6 +53,8 @@
             return alert(JSON.stringify(commitHistory, null, 2));
           }
 
+          console.log(commitHistory);
+
           let outputHTML = "";
 
           for (let i = 0; i < commitHistory.length; i++) {
@@ -66,11 +68,52 @@
 </div>
 `;
             outputHTML += commitElement;
+
+            if (i === 0) {
+              document.body.dataset.latestCommitSHA = commitHistory[i].sha;
+            }
           }
           output.innerHTML = outputHTML;
         } else {
           output.innerHTML = "<p>Not signed in :(</p>";
         }
+      }
+    </script>
+    <script>
+      async function getCurrentTree() {
+        const output = document.getElementById("sha-tree");
+
+        const latestCommitResponse = await fetch(
+          `https://api.github.com/repos/jhancock532/cloudflare-github-oauth/git/commits/${document.body.dataset.latestCommitSHA}`,
+          {
+            headers: {
+              accept: "application/vnd.github.v3+json",
+              authorization: `token ${document.body.dataset.token}`,
+            },
+          }
+        );
+
+        const latestCommit = await commitHistoryResponse.json();
+
+        if (latestCommit.error) {
+          return alert(JSON.stringify(latestCommit, null, 2));
+        }
+
+        console.log(latestCommit);
+
+        const rootTreeResponse = await fetch(
+          `https://api.github.com/repos/jhancock532/cloudflare-github-oauth/git/trees/${latestCommit.tree.sha}`,
+          {
+            headers: {
+              accept: "application/vnd.github.v3+json",
+              authorization: `token ${document.body.dataset.token}`,
+            },
+          }
+        );
+
+        const rootTree = await rootTreeResponse.json();
+
+        console.log(rootTree);
       }
     </script>
   </head>
@@ -90,6 +133,10 @@
 
       <button onclick="loadCommitHistory();">
         Load the commit history for this website!
+      </button>
+
+      <button onclick="getCurrentTree();">
+        Load the root tree node SHA! (see console)
       </button>
 
       <div id="commit-history"></div>
