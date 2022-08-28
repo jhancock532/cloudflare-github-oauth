@@ -110,11 +110,11 @@
 
         let treeOutputHTML = "<ul>";
 
-        for (let i = 0; i < rootTree.length; i++) {
-          if (rootTree[i].type === "blob") {
-            treeOutputHTML += `<li>File: ${rootTree[i].path}</li>`;
+        for (let i = 0; i < rootTree.tree.length; i++) {
+          if (rootTree.tree[i].type === "blob") {
+            treeOutputHTML += `<li>File: ${rootTree.tree[i].path}</li>`;
           } else {
-            treeOutputHTML += `<li>Folder: ${rootTree[i].path}</li>`;
+            treeOutputHTML += `<li>Folder: ${rootTree.tree[i].path}</li>`;
           }
         }
 
